@@ -17,31 +17,9 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="starter" ng-controller="mainCtrl">
-    <ion-content class="center" style="background-image: url(swirl_pattern.png); img-repeat: repeat">
-       <div class="row responsive-sm">
-        <div class="col-100">
-          <div class="list list-inset ">
-                <label class="item item-input">
-                  <span class="input-label">Nome</span>
-                  <input type="text" ng-model="name" required>
-                </label>
-                <label class="item item-input item-select">
-                  <div class="input-label">
-                    Professione
-                  </div>
-                  <select ng-model="job" placeholder="Seleziona" required>
-                    <option value="pittore">Pittore</option>
-                    <option value="idraulico">Idraulico</option>
-                    <option value="muratore">Muratore</option>
-                  </select>
-                </label>
-              </div>
-                <button class="button button-calm button-full button-clear button-large" ng-click="saveAll(name, job)">
-                  <span style="font-size: 1.4em;">INIZIA</span>
-                </button>
-        </div>
-      </div>
-    </ion-content>
+  <body ng-app="starter">
+      <ion-view>
+        this an index page, but how can I put there 'first' if there is no data saved locally or 'home' if there are data?
+      </ion-view>
   </body>
 </html>

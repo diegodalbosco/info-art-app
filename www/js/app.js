@@ -6,7 +6,7 @@
 
 angular.module('starter', ['ionic'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $localstorage, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -16,22 +16,42 @@ angular.module('starter', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    if ($localstorage.get('job') && $localstorage.get('name')) {
+      $state.href('/home');
+    } else {
+      $state.href('/first');
+    }
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
 
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      controller: 'HomeCtrl',
+      templateUrl: 'home/home.html'
+    })    
+    .state('first', {
+      url: '/first',
+      controller: 'FirstCtrl',
+      templateUrl: 'first/first.html'
+    })
+
+  $urlRouterProvider.otherwise('/first');
 })
 
-.controller('mainCtrl', function($scope, $localstorage) {
+.controller('FirstCtrl', function($scope, $localstorage, $state) {
+  var init = function(){
+      if($scope.getName() && $scope.getJob()){
+          $state.href('/home');
+      }
+  };
   $scope.setName = function(name) {
     if (name) {
       $localstorage.set('name', name.toLowerCase());
       console.log(name);
     }
-  }
-  $scope.getName = function() {
-    alert($localstorage.get('name'));
   }
   $scope.setJob = function(job) {
     if (name) {
@@ -39,19 +59,35 @@ angular.module('starter', ['ionic'])
       console.log(job);
     }
   }
-  $scope.getJob = function() {
-    alert($localstorage.get('job'));
-  }
   $scope.saveAll = function(name, job) {
     if (name) {
       $localstorage.set('name', name.toLowerCase());
       console.log(name);
     }
-    if (name) {
-          $localstorage.set('job', job.toLowerCase());
-          console.log(job);
-        }
+    if (job) {
+      $localstorage.set('job', job.toLowerCase());
+      console.log(job);
+    }
+    init();
   }
+  $scope.getName = function() {
+    return $localstorage.get('name');
+  };
+
+  $scope.getJob = function() {
+      return $localstorage.get('job');
+  };
+
+  init();
+
+})
+
+
+.controller('HomeCtrl', function($scope) {
+  $scope.lol = function() {
+    alert("im here");
+  }
+  lol();
 })
 
 .factory('$localstorage', ['$window', function($window) {
