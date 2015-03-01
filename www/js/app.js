@@ -25,18 +25,32 @@ angular.module('starter', ['ionic'])
 
 .controller('mainCtrl', function($scope, $localstorage) {
   $scope.setName = function(name) {
-    $localstorage.set('name', name);
-    console.log(name);
+    if (name) {
+      $localstorage.set('name', name.toLowerCase());
+      console.log(name);
+    }
   }
   $scope.getName = function() {
     alert($localstorage.get('name'));
   }
-  $scope.setJob = function(name) {
-    $localstorage.set('job', name);
-    console.log(name);
+  $scope.setJob = function(job) {
+    if (name) {
+      $localstorage.set('job', job.toLowerCase());
+      console.log(job);
+    }
   }
   $scope.getJob = function() {
     alert($localstorage.get('job'));
+  }
+  $scope.saveAll = function(name, job) {
+    if (name) {
+      $localstorage.set('name', name.toLowerCase());
+      console.log(name);
+    }
+    if (name) {
+          $localstorage.set('job', job.toLowerCase());
+          console.log(job);
+        }
   }
 })
 
