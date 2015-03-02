@@ -61,7 +61,7 @@ angular.module('starter', ['ionic'])
 
   $scope.saveAll = function(name, job) {
     $scope.setName(name);
-    $scope.setJob(name);
+    $scope.setJob(job);
     init();
   };
 
@@ -78,11 +78,15 @@ angular.module('starter', ['ionic'])
 })
 
 
-.controller('HomeCtrl', function($scope) {
-  $scope.lol = function() {
-    alert("im here");
-  };
-  $scope.lol();
+.controller('HomeCtrl', function($scope, $localstorage, $state) {
+  $scope.job = $localstorage.get('job');
+  $scope.name = $localstorage.get('name');
+
+  $scope.deleteData = function() {
+    $localstorage.del('name');
+    $localstorage.del('job');
+    $state.go('first');
+  }
 })
 
 .factory('$localstorage', ['$window', function($window) {
@@ -98,6 +102,9 @@ angular.module('starter', ['ionic'])
     },
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
+    },
+    del: function(key) {
+      $window.localStorage.removeItem(key);
     }
   };
 }]);
