@@ -1,0 +1,31 @@
+<ion-header-bar class="bar bar-header bar-calm">
+  	<a class="button button-clear" ng-href="#/home">Indietro</a>
+    <h1 class="title" style="text-transform: capitalize">{{name}}, {{job}}</h1>
+</ion-header-bar>
+<ion-content scroll="true">
+	<div class="list list-inset">
+    <label class="item item-input">
+      <span class="input-label">Nome</span>
+      <input type="text" ng-model="name" required>
+    </label>
+    <label class="item item-input item-select">
+      <div class="input-label">
+        Professione
+      </div>
+      <select ng-model="job" placeholder="Seleziona" required>
+        <option value="pittore">Pittore</option>
+        <option value="idraulico">Idraulico</option>
+        <option value="muratore">Muratore</option>
+      </select>
+    </label>
+
+	  <button class="button button-balanced button-block" ng-click="changeData(name, job)">
+	  	Cambia dati
+	  </button>
+
+	  <button class="button button-assertive button-block button-outline" ng-click="deleteData()">
+	  	Elimina dati
+	  </button>
+	</div>
+
+</ion-content>

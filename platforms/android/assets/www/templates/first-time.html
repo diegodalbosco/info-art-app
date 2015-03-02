@@ -1,15 +1,25 @@
-<ion-view title='Select an option'>
-	<ion-content has-bouncing="true">
-		<div class="list list-inset">
-		  <label class="item item-input">
-		    <input type="text" placeholder="Nome">
-		  </label>
-		  <label class="item item-input">
-		    <input type="text" placeholder="Professione">
-		  </label>
-<button class="button button-full button-positive" ng-click="ciao()">
-Full Width Block Button
-</button>
-		</div>
-	</ion-content>
-</ion-view>
+    <ion-content class="center" style="background-image: url(swirl_pattern.png); img-repeat: repeat">
+       <div class="row responsive-sm">
+        <div class="col-100">
+          <div class="list list-inset ">
+                <label class="item item-input">
+                  <span class="input-label">Nome</span>
+                  <input type="text" ng-model="name" required>
+                </label>
+                <label class="item item-input item-select">
+                  <div class="input-label">
+                    Professione
+                  </div>
+                  <select ng-model="job" placeholder="Seleziona" required>
+                    <option value="pittore">Pittore</option>
+                    <option value="idraulico">Idraulico</option>
+                    <option value="muratore">Muratore</option>
+                  </select>
+                </label>
+              </div>
+              <button class="button button-calm button-full button-clear button-large" ng-click="saveAll(name, job)">
+                <span style="font-size: 1.4em;">INIZIA</span>
+              </button>
+        </div>
+      </div>
+    </ion-content>

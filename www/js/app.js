@@ -31,6 +31,11 @@ angular.module('starter', ['ionic'])
       url: '/first',
       controller: 'FirstCtrl',
       templateUrl: 'templates/first-time.html'
+    })
+    .state('settings', {
+      url: '/settings',
+      controller: 'SettingsCtrl',
+      templateUrl: 'templates/settings.html'
     });
 
     $urlRouterProvider.otherwise('/first');
@@ -82,10 +87,39 @@ angular.module('starter', ['ionic'])
   $scope.job = $localstorage.get('job');
   $scope.name = $localstorage.get('name');
 
+  $scope.settings = function() {
+    $state.go('settings', {}, {reload: true});
+  }
+})
+
+.controller('SettingsCtrl', function($scope, $localstorage, $state) {
+  $scope.job = $localstorage.get('job');
+  $scope.name = $localstorage.get('name');
+  console.log($scope.name);
+  console.log($scope.job);
+
   $scope.deleteData = function() {
     $localstorage.del('name');
     $localstorage.del('job');
-    $state.go('first');
+    $state.go('first', {}, {reload: true});
+  }
+
+  $scope.changeData = function(name, job) {
+    if (name) {
+      $localstorage.set('name', name);
+      $scope.name = name;
+    }
+    if (job) {
+      $localstorage.set('job', job);
+      $scope.job = job;
+    }
+    if (job || name) {
+     $state.go('home', {}, {reload: true});
+    }
+  }
+
+  $scope.home = function() {
+    $state.go('home', {}, {reload: true});
   }
 })
 

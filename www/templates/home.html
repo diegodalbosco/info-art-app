@@ -1,9 +1,21 @@
 <ion-header-bar class="bar bar-header bar-calm">
-    <h1 class="title" style="text-transform: capitalize">{{job}}</h1>
+    <h1 class="title" style="text-transform: capitalize">{{name}}, {{job}}</h1>
+  <button class="button button-clear ion ion-gear-a" ng-click="settings()"></button>
 </ion-header-bar>
 <ion-content scroll="true">
-	<h1>Ciao {{name}}!</h1>
-    <button class="button button-assertive" ng-click="deleteData()">
-    	Elimina dati
-    </button>
+    <div class="card">
+			<div class="item item-text-wrap">
+			  This is a basic Card which contains an item that has wrapping text.
+			</div>
+		</div>
+		<div class="card">
+		  <div class="item item-text-wrap">
+		    This is a basic Card which contains an item that has wrapping text.
+		  </div>
+		</div>
+		<div class="card">
+		  <div class="item item-text-wrap">
+		    This is a basic Card which contains an item that has wrapping text.
+		  </div>
+		</div>
 </ion-content>

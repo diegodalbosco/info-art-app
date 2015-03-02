@@ -6,7 +6,7 @@
 
 angular.module('starter', ['ionic'])
 
-.run(function($ionicPlatform, $localstorage) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -16,43 +16,101 @@ angular.module('starter', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-    alert("Nome: "+ $localstorage.get('name')+" Job: "+$localstorage.get('job'));
   });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
 
+  $stateProvider
+    .state('home', {
+      url: '/home',
+      controller: 'HomeCtrl',
+      templateUrl: 'templates/home.html'
+    })
+    .state('first', {
+      url: '/first',
+      controller: 'FirstCtrl',
+      templateUrl: 'templates/first-time.html'
+    })
+    .state('settings', {
+      url: '/settings',
+      controller: 'SettingsCtrl',
+      templateUrl: 'templates/settings.html'
+    });
+
+    $urlRouterProvider.otherwise('/first');
+
 })
 
-.controller('mainCtrl', function($scope, $localstorage) {
+.controller('FirstCtrl', function($scope, $localstorage, $state) {
+
+  var init = function(){
+      if($scope.getName() && $scope.getJob()){
+          $state.go('home');
+      }
+  };
+
   $scope.setName = function(name) {
     if (name) {
       $localstorage.set('name', name.toLowerCase());
       console.log(name);
     }
-  }
-  $scope.getName = function() {
-    alert($localstorage.get('name'));
-  }
+  };
+
   $scope.setJob = function(job) {
-    if (name) {
+    if (job) {
       $localstorage.set('job', job.toLowerCase());
       console.log(job);
     }
-  }
-  $scope.getJob = function() {
-    alert($localstorage.get('job'));
-  }
+  };
+
   $scope.saveAll = function(name, job) {
-    if (name) {
-      $localstorage.set('name', name.toLowerCase());
-      console.log(name);
-    }
-    if (name) {
-          $localstorage.set('job', job.toLowerCase());
-          console.log(job);
-        }
+    $scope.setName(name);
+    $scope.setJob(job);
+    init();
+  };
+
+  $scope.getName = function() {
+    return $localstorage.get('name');
+  };
+
+  $scope.getJob = function() {
+    return $localstorage.get('job');
+  };
+
+  init();
+
+})
+
+
+.controller('HomeCtrl', function($scope, $localstorage, $state) {
+  $scope.job = $localstorage.get('job');
+  $scope.name = $localstorage.get('name');
+})
+
+.controller('SettingsCtrl', function($scope, $localstorage, $state) {
+  $scope.job = $localstorage.get('job');
+  $scope.name = $localstorage.get('name');
+
+  $scope.deleteData = function() {
+    $localstorage.del('name');
+    $localstorage.del('job');
+    $state.go('first');
   }
+
+  $scope.changeData = function(name, job) {
+    console.log(name);
+    console.log(job);
+    if (name) {
+      $localstorage.set('name', name);
+      $state.go('home');
+    }
+    if (job){
+      $localstorage.set('job', job);
+      $state.go('home');
+    }
+  }
+
 })
 
 .factory('$localstorage', ['$window', function($window) {
@@ -68,6 +126,9 @@ angular.module('starter', ['ionic'])
     },
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
+    },
+    del: function(key) {
+      $window.localStorage.removeItem(key);
     }
-  }
+  };
 }]);
