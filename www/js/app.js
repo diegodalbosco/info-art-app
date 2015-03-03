@@ -25,7 +25,10 @@ angular.module('starter', ['ionic'])
     .state('home', {
       url: '/home',
       controller: 'HomeCtrl',
-      templateUrl: 'templates/home.html'
+      templateUrl: 'templates/home.html',
+      onEnter: function($rootScope, $localstorage) {
+        alert("rootscope.name: "+ $rootScope.name);
+      }
     })
     .state('first', {
       url: '/first',
@@ -35,17 +38,22 @@ angular.module('starter', ['ionic'])
     .state('settings', {
       url: '/settings',
       controller: 'SettingsCtrl',
-      templateUrl: 'templates/settings.html'
+      templateUrl: 'templates/settings.html',
+      onEnter: function($rootScope, $localstorage) {
+        alert("rootscope.name: "+ $rootScope.name);
+      }
     });
 
     $urlRouterProvider.otherwise('/first');
 
 })
 
-.controller('FirstCtrl', function($scope, $localstorage, $state) {
+.controller('FirstCtrl', function($scope, $localstorage, $state, $rootScope) {
 
   var init = function(){
       if($scope.getName() && $scope.getJob()){
+          $rootScope.name = $scope.getName();
+          $rootScope.job = $scope.getJob();
           $state.go('home');
       }
   };
@@ -83,16 +91,15 @@ angular.module('starter', ['ionic'])
 })
 
 
-.controller('HomeCtrl', function($scope, $localstorage, $state) {
-  $scope.job = $localstorage.get('job');
-  $scope.name = $localstorage.get('name');
-
+.controller('HomeCtrl', function($scope, $localstorage, $state, $rootScope) {
+  $rootScope.job = $scope.job;
+  $rootScope.name = $scope.name;
   $scope.settings = function() {
     $state.go('settings', {}, {reload: true});
   }
 })
 
-.controller('SettingsCtrl', function($scope, $localstorage, $state) {
+.controller('SettingsCtrl', function($scope, $localstorage, $state, $rootScope) {
   $scope.job = $localstorage.get('job');
   $scope.name = $localstorage.get('name');
   console.log($scope.name);
@@ -107,11 +114,11 @@ angular.module('starter', ['ionic'])
   $scope.changeData = function(name, job) {
     if (name) {
       $localstorage.set('name', name);
-      $scope.name = name;
+      $rootScope.name = name;
     }
     if (job) {
       $localstorage.set('job', job);
-      $scope.job = job;
+      $rootScope.job = job;
     }
     if (job || name) {
      $state.go('home', {}, {reload: true});

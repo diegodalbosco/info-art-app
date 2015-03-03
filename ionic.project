@@ -1,6 +1,6 @@
 {
   "name": "InfoArt",
-  "app_id": "",
+  "app_id": "805115b2",
   "gulpStartupTasks": [
     "sass",
     "watch"
